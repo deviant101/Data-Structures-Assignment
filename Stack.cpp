@@ -2,18 +2,17 @@
 #include <math.h>
 using namespace std;
 
-struct Node{
-    int data;
-    Node *next;
-    Node(int d=0, Node* n=nullptr){
-        data=d;
-        next=n;
-    }
-};
-
 class Stack{
 
     private:
+        struct Node{
+        int data;
+        Node *next;
+        Node(int d=0, Node* n=nullptr){
+            data=d;
+            next=n;
+        }
+        };
         Node *top;
 
     public:
@@ -35,6 +34,42 @@ class Stack{
             Node *tempNode=top;
             top=top->next;
             return tempNode;
+        }
+
+        int BinaryToDecimal(long long int num){
+
+        Stack binaryStack;
+        for(int i=0; num; ++i){
+            int digit=num%10;
+            num/=10;
+            binaryStack.push(digit*pow(2,i));
+        }
+
+        int Dec=0;
+        while(!binaryStack.isEmpty()){
+            Node *tempNode=binaryStack.pop();
+            Dec+=tempNode->data;
+            delete tempNode;
+        }
+        return Dec;
+        }
+
+        long long int DecimalToBinary(int num){
+
+            Stack DecimalStack;
+            while(num){
+                int digit=num%2;
+                num/=2;
+                DecimalStack.push(digit);
+            }
+
+            long long int Bin=0;
+            while(!DecimalStack.isEmpty()){
+                Node* tempNode=DecimalStack.pop();
+                Bin = Bin * 10 + tempNode->data;
+                delete tempNode;
+            }
+            return Bin;
         }
 
         bool isEmpty(){
@@ -63,58 +98,24 @@ class Stack{
 
 };
 
-int BinaryToDecimal(long long int num){
-
-    Stack binaryStack;
-    for(int i=0; num; ++i){
-        int digit=num%10;
-        num/=10;
-        binaryStack.push(digit*pow(2,i));
-    }
-
-    int Dec=0;
-    while(!binaryStack.isEmpty()){
-        Node *tempNode=binaryStack.pop();
-        Dec+=tempNode->data;
-        delete tempNode;
-    }
-    return Dec;
-}
-
-long long int DecimalToBinary(int num){
-
-    Stack DecimalStack;
-    while(num){
-        int digit=num%2;
-        num/=2;
-        DecimalStack.push(digit);
-    }
-
-    long long int Bin=0;
-    while(!DecimalStack.isEmpty()){
-        Node* tempNode=DecimalStack.pop();
-        Bin = Bin * 10 + tempNode->data;
-        delete tempNode;
-    }
-    return Bin;
-}
-
 int main(){
 
+    Stack bin;
     cout<<"From Decimal to Binary"<<endl;
-    cout<<"11000101 : "<<BinaryToDecimal(11000101)<<endl;
-    cout<<"10101010 : "<<BinaryToDecimal(10101010)<<endl;
-    cout<<"11111111 : "<<BinaryToDecimal(11111111)<<endl;
-    cout<<"10000000 : "<<BinaryToDecimal(10000000)<<endl;
-    cout<<"1111100000 : "<<BinaryToDecimal(1111100000)<<endl;
+    cout<<"11000101 : "<<bin.BinaryToDecimal(11000101)<<endl;
+    cout<<"10101010 : "<<bin.BinaryToDecimal(10101010)<<endl;
+    cout<<"11111111 : "<<bin.BinaryToDecimal(11111111)<<endl;
+    cout<<"10000000 : "<<bin.BinaryToDecimal(10000000)<<endl;
+    cout<<"1111100000 : "<<bin.BinaryToDecimal(1111100000)<<endl;
 
+    Stack Dec;
     cout<<"\nFrom Decimal to Binary"<<endl;
-    cout<<"4 : "<<DecimalToBinary(4)<<endl;
-    cout<<"5 : "<<DecimalToBinary(5)<<endl;
-    cout<<"6 : "<<DecimalToBinary(6)<<endl;
-    cout<<"7 : "<<DecimalToBinary(7)<<endl;
-    cout<<"8 : "<<DecimalToBinary(8)<<endl;
-    cout<<"9 : "<<DecimalToBinary(9)<<endl;
+    cout<<"4 : "<<Dec.DecimalToBinary(4)<<endl;
+    cout<<"5 : "<<Dec.DecimalToBinary(5)<<endl;
+    cout<<"6 : "<<Dec.DecimalToBinary(6)<<endl;
+    cout<<"7 : "<<Dec.DecimalToBinary(7)<<endl;
+    cout<<"8 : "<<Dec.DecimalToBinary(8)<<endl;
+    cout<<"9 : "<<Dec.DecimalToBinary(9)<<endl;
 
     return 0;
 }
