@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string>
+#include <math.h>
 using namespace std;
 
 struct Node
@@ -13,9 +15,10 @@ class Queue{
     private:
         Node *front;
         Node *rear;
+        int size;
 
     public:
-        Queue(): front(nullptr), rear(nullptr) {}
+        Queue(): front(nullptr), rear(nullptr), size(0) {}
 
         void Enqueue(string d){
             Node *tempNode = new Node(d);
@@ -27,12 +30,24 @@ class Queue{
                 rear->next=tempNode;
                 rear=tempNode;
             }
+            ++size;
         }
 
         Node* Dequeue(){
             Node *tempNode=front;
             front=front->next;
+            --size;
             return tempNode;
+        }
+
+        bool isEmpty(){
+            if(front==nullptr && rear==nullptr)
+                return true;
+            return false;
+        }
+
+        int Q_size(){
+            return size;
         }
 
         void Print(){
@@ -91,6 +106,58 @@ class Operator_Stack{
                 }
             }
             Postfix_Expression.Print();
+            Post_Expression(Postfix_Expression);
+        }
+
+        void Post_Expression(Queue &Postfix){
+            cout<<"Eval"<<endl;
+            // Operator_Stack obj;
+            // Postfix.Print();
+            // cout<<Postfix.Dequeue()->data<<" ";
+            // cout<<Postfix.Dequeue()->data<<" ";
+            // cout<<Postfix.Dequeue()->data<<" ";
+            // cout<<Postfix.Dequeue()->data<<" ";
+            // cout<<Postfix.Dequeue()->data<<" ";
+            // cout<<Postfix.Dequeue()->data<<" ";
+            // cout<<Postfix.Dequeue()->data<<" ";
+            // cout<<Postfix.Dequeue()->data<<" "
+            while(Postfix.Q_size()){
+            
+                string ch="";
+                ch=Postfix.Dequeue()->data;
+
+                if(ch=="+" || ch=="-" || ch=="*" || ch=="/" || ch=="^"){
+                    int r_operand=stoi(pop()->data);
+                    int l_operand=stoi(pop()->data);
+                    if(ch=="+"){
+                        push(to_string(l_operand+r_operand));
+                    }
+                    else if(ch=="-"){
+                        push(to_string(l_operand-r_operand));
+                    }
+                    else if(ch=="*"){
+                        push(to_string(l_operand*r_operand));
+                    }
+                    else if(ch=="/"){
+                        push(to_string(l_operand/r_operand));
+                    }
+                    else if(ch=="^"){
+                        to_string(pow(l_operand,r_operand));
+                    }
+                }
+                else
+                    push(ch);
+            }
+            cout<<" Answer = ";
+            cout<<pop()->data<<endl;
+        }
+
+        void clear(){
+            while(top!=nullptr){
+                Node* tempNode=top;
+                top=top->next;
+                delete tempNode;
+            }
         }
 
         bool isEmpty(){
