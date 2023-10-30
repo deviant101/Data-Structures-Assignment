@@ -21,14 +21,9 @@ class Expression_Stack{
         Expression_Stack():top(nullptr), expression(""){}
 
         void push(int d){
-
             Node *tempNode=new Node(d);
-            if(top==nullptr)
-                top=tempNode;
-            else{
-                tempNode->next=top;
-                top=tempNode;
-            }
+            tempNode->next=top;
+            top=tempNode;
         }
 
         Node* stack_top(){
