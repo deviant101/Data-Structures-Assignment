@@ -6,3 +6,6 @@ test
 
 # Ignore .vscode directory
 .vscode
+
+# Ignore pdf files
+*.pdf
