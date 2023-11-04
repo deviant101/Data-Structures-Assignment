@@ -86,10 +86,11 @@ class Operator_Stack{
         void infix_to_postfix(){
 
             Queue Postfix_Expression;
+            cout<<"Enter Infix Expression: ";
             while(1){
                 string ch="";
                 cin>>ch;
-                if(ch=="q")
+                if(ch=="q")     //exiting on q
                     break;
                 else if(ch=="(")
                     continue;
@@ -105,22 +106,13 @@ class Operator_Stack{
                     Postfix_Expression.Enqueue(ch);
                 }
             }
+            cout<<"\nConverted Postfix Expression is:\n";
             Postfix_Expression.Print();
             Post_Expression(Postfix_Expression);
         }
 
         void Post_Expression(Queue &Postfix){
-            cout<<"Eval"<<endl;
-            // Operator_Stack obj;
-            // Postfix.Print();
-            // cout<<Postfix.Dequeue()->data<<" ";
-            // cout<<Postfix.Dequeue()->data<<" ";
-            // cout<<Postfix.Dequeue()->data<<" ";
-            // cout<<Postfix.Dequeue()->data<<" ";
-            // cout<<Postfix.Dequeue()->data<<" ";
-            // cout<<Postfix.Dequeue()->data<<" ";
-            // cout<<Postfix.Dequeue()->data<<" ";
-            // cout<<Postfix.Dequeue()->data<<" "
+            cout<<"\nEvaluating Postfix Expression....."<<endl<<"\nResult: ";
             while(Postfix.Q_size()){
             
                 string ch="";
@@ -148,7 +140,6 @@ class Operator_Stack{
                 else
                     push(ch);
             }
-            cout<<" Answer = ";
             cout<<pop()->data<<endl;
         }
 
@@ -174,7 +165,6 @@ class Operator_Stack{
             }
             cout<<endl;
         }
-
 };
 
 int main(){

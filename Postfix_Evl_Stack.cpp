@@ -1,6 +1,7 @@
 #include <iostream>
 #include <math.h>
-#include "conio.h"
+#include <string>
+// #include "conio.h"
 using namespace std;
 
 class Expression_Stack{
@@ -53,42 +54,32 @@ class Expression_Stack{
         }
 
         int Post_Expression(){
-
+            cout<<"Enter Postfix Expression: ";
             while(1){
-                char ch=getch();
-                if(ch=='\n')
+                string ch="";
+                cin>>ch;
+                if(ch=="q")     //exiting on q
                     break;
-                cout<<ch<<" ";
-                if(ch>='0' && ch<='9')
-                    push(ch-48);
-                else if(ch=='+' || ch=='-' || ch=='*' || ch=='/' || ch=='^'){
+                else if(ch=="+" || ch=="-" || ch=="*" || ch=="/" || ch=="^"){
                     int r_operand=pop()->data;
                     int l_operand=pop()->data;
-                    switch (ch)
-                    {
-                        case '+':
-                            push(l_operand+r_operand);
-                        break;
-                        case '-':
-                            push(l_operand-r_operand);
-                        break;
-                        case '*':
-                            push(l_operand*r_operand);
-                        break;
-                        case '/':
-                            push(l_operand/r_operand);
-                        break;
-                        case '^':
-                            push(pow(l_operand,r_operand));
-                        break;
-                    }
+                    if(ch=="+")
+                        push(l_operand+r_operand);
+                    else if(ch=="-")
+                        push(l_operand-r_operand);
+                    else if(ch=="*")
+                        push(l_operand*r_operand);
+                    else if(ch=="/")
+                        push(l_operand/r_operand);
+                    else if(ch=="^")
+                        push(pow(l_operand,r_operand));
                 }
+                else
+                    push(stoi(ch));
             }
-            cout<<" Answer = ";
+            cout<<"Result = ";
             return pop()->data;
         }
-
-
 };
 
 int main(){
